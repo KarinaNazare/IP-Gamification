@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/Admin")
+    </head>
+    <body>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left title-line">
+                    <p class="site-title">@Html.ActionLink("DAKI", "Index", "Home")</p>
+                </div>
+                <div class="float-left" id="nav-bar">
+                    <nav>
+                        <ul id="menu">
+                            <li>@Html.ActionLink("Search Employee", "SearchEmployee", "Account")</li>
+                            <li>@Html.ActionLink("Hall of Fame", "HallOfFame", "Account")</li>
+                            <li>@Html.ActionLink("Shop", "Shop", "Account")</li>
+                            @if(User.IsInRole(Types.Role.Admin))
+                            {
+                                <li>@Html.ActionLink("Manage Roles", "RoleManagement", "Admin")</li>
+                                <li>@Html.ActionLink("Manage Shop", "ListPrizes", "Admin")</li>
+
+                            }
+                            @if(User.IsInRole(Types.Role.Admin))
+                            {
+                                <li>@Html.ActionLink("Award Points", "ListUsersPoints", "Account")</li>
+                            }
+                            <span class="float-right">
+                                <li>@Html.ActionLink("Notifications", "Notifications", "Account")</li>
+                                @Html.Partial("_LoginPartial")
+                            </span>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <div id="body">
+            <section class="content-wrapper main-content clear-fix">
+                <section class="featured">
+                    <div class="content-wrapper">
+                        @RenderSection("featured", required: false)
+                        @RenderBody()
+                    </div>
+                </section>
+            </section>
+        </div>
+
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year- DAKI</p>
+                </div>
+            </div>
+        </footer>
+
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>
